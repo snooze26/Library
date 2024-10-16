@@ -1,11 +1,8 @@
 
-const document = document.getElementId("script");
-const prompt = require("prompt-sync")();
-
 const library = [];
 const newBook = null;
 const addBook = document.querySelector(".newbook");
-const bookEntry = document.querySelector(".book");
+const bookList = document.querySelector("#bookList");
 
 
 function Book(title, author, pages){
@@ -23,20 +20,41 @@ function addBooktoLib(){
     const newBook = new Book(title, author, pages);
     library.push(newBook);
     console.log("Book added: ", newBook);
-    return newBook;
+    displayBooks();
     }
 
-// function displayBook(book){
-    
-// }
+function displayBooks(){
+    bookList.innerHTML = " ";
+    library.forEach(book =>{
+        let bookCard = document.createElement("tr");
+        bookCard.classList.add("bookRow");
 
-function displayBook(book){
-    book = newBook; 
-    bookEntry.textContent += book;
+        const row = document.createElement("tr");
+        row.classList.add("bookRow");
+
+        const titleCell = document.createElement("td");
+        const authorCell = document.createElement("td");
+        const pagesCell = document.createElement("td");
+
+
+        titleCell.textContent = book.title;
+        authorCell.textContent = book.author;
+        pagesCell.textContent = book.pages;
+
+        row.appendChild(titleCell);
+        row.appendChild(authorCell);
+        row.appendChild(pagesCell);
+
+
+        bookList.appendChild(row);
+
+    });
 }
 
-addBook.addEventListener(addBooktoLib, "click");
 
 
+addBook.addEventListener("click", addBooktoLib);
+
+displayBooks();
 
 
