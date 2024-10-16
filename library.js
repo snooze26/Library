@@ -1,8 +1,9 @@
 
 const library = [];
 const newBook = null;
-const addBook = document.querySelector(".newbook");
+const addBook = document.querySelector("#newbook");
 const bookList = document.querySelector("#bookList");
+const bookForm = document.querySelector("#form");
 
 
 function Book(title, author, pages){
@@ -52,8 +53,16 @@ function displayBooks(){
 }
 
 
+addBook.addEventListener("click", () =>{
+    if(bookForm.style.display === "none" || bookForm.style.display === ""){
+        bookForm.style.display = "block";
+    }else {
+        bookForm.style.display = "none";
+    }
 
-addBook.addEventListener("click", addBooktoLib);
+})
+
+
 
 displayBooks();
 
