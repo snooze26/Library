@@ -7,22 +7,12 @@ const formDiv = document.querySelector("#form");
 const bookForm = document.querySelector("#bookForm");
 
 
-function Book(title, author, pages){
+function Book(title, author, pages, read){
     this.title = title;
     this.author = author;
     this.pages = pages;
+    this.read = read;
 }
-
-function addBooktoLib(){
-    const title = prompt("What is the title of your book?");
-    const author = prompt("Who wrote the book?");
-    const pages = parseInt(prompt("How many pages are in your book?"));
-
-    const newBook = new Book(title, author, pages);
-    library.push(newBook);
-    console.log("Book added: ", newBook);
-    displayBooks();
-    }
 
 function displayBooks(){
     bookList.innerHTML = " ";
@@ -37,8 +27,13 @@ function displayBooks(){
         const authorCell = document.createElement("td");
         const pagesCell = document.createElement("td");
         const removeBtn = document.createElement("button");
+        // const readBtn = document.createElement("button");
+
 
         removeBtn.textContent = "Remove";
+        removeBtn.style.background = "red";
+        // readBtn.textContent = "Read"; 
+
 
 
         titleCell.textContent = book.title;
@@ -49,13 +44,21 @@ function displayBooks(){
         row.appendChild(authorCell);
         row.appendChild(pagesCell);
         row.appendChild(removeBtn);
+        // row.appendChild(readBtn);
 
 
         bookList.appendChild(row);
+
         removeBtn.addEventListener("click", () =>{
             library.splice(index, 1);
             displayBooks();
         })
+
+        // readBtn.addEventListener("click", () =>{
+        //     readBtn.style.background = "green";
+        //     readBtn.style.color = "white";
+        //     // readBtn.style.opacity = "0.5";
+        // })
 
     });
 }
