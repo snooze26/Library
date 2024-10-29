@@ -7,11 +7,15 @@ const formDiv = document.querySelector("#form");
 const bookForm = document.querySelector("#bookForm");
 
 
-function Book(title, author, pages, read){
+function Book(title, author, pages, read = false){
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
+}
+
+Book.prototype.toggleReadStatus = function() {
+    this.read = !this.read;
 }
 
 function displayBooks(){
@@ -27,12 +31,14 @@ function displayBooks(){
         const authorCell = document.createElement("td");
         const pagesCell = document.createElement("td");
         const removeBtn = document.createElement("button");
-        // const readBtn = document.createElement("button");
+        const readBtn = document.createElement("button");
 
 
         removeBtn.textContent = "Remove";
         removeBtn.style.background = "red";
-        // readBtn.textContent = "Read"; 
+        readBtn.textContent = book.read ? "Read" : "Unread";
+        readBtn.style.background = book.read ? "green" : "gray";
+        readBtn.style.color = "white" 
 
 
 
@@ -44,7 +50,7 @@ function displayBooks(){
         row.appendChild(authorCell);
         row.appendChild(pagesCell);
         row.appendChild(removeBtn);
-        // row.appendChild(readBtn);
+        row.appendChild(readBtn);
 
 
         bookList.appendChild(row);
@@ -54,11 +60,10 @@ function displayBooks(){
             displayBooks();
         })
 
-        // readBtn.addEventListener("click", () =>{
-        //     readBtn.style.background = "green";
-        //     readBtn.style.color = "white";
-        //     // readBtn.style.opacity = "0.5";
-        // })
+        readBtn.addEventListener("click", () =>{
+            book.toggleReadStatus();
+            displayBooks();
+        })
 
     });
 }
