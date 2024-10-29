@@ -3,7 +3,8 @@ const library = [];
 const newBook = null;
 const addBook = document.querySelector("#newbook");
 const bookList = document.querySelector("#bookList");
-const bookForm = document.querySelector("#form");
+const formDiv = document.querySelector("#form");
+const bookForm = document.querySelector("#bookForm");
 
 
 function Book(title, author, pages){
@@ -11,7 +12,6 @@ function Book(title, author, pages){
     this.author = author;
     this.pages = pages;
 }
-
 
 function addBooktoLib(){
     const title = prompt("What is the title of your book?");
@@ -26,7 +26,7 @@ function addBooktoLib(){
 
 function displayBooks(){
     bookList.innerHTML = " ";
-    library.forEach(book =>{
+    library.forEach((book, index) =>{
         let bookCard = document.createElement("tr");
         bookCard.classList.add("bookRow");
 
@@ -36,6 +36,9 @@ function displayBooks(){
         const titleCell = document.createElement("td");
         const authorCell = document.createElement("td");
         const pagesCell = document.createElement("td");
+        const removeBtn = document.createElement("button");
+
+        removeBtn.textContent = "Remove";
 
 
         titleCell.textContent = book.title;
@@ -45,23 +48,45 @@ function displayBooks(){
         row.appendChild(titleCell);
         row.appendChild(authorCell);
         row.appendChild(pagesCell);
+        row.appendChild(removeBtn);
 
 
         bookList.appendChild(row);
+        removeBtn.addEventListener("click", () =>{
+            library.splice(index, 1);
+            displayBooks();
+        })
 
     });
 }
 
-
 addBook.addEventListener("click", () =>{
-    if(bookForm.style.display === "none" || bookForm.style.display === ""){
-        bookForm.style.display = "block";
-    }else {
-        bookForm.style.display = "none";
-    }
 
+    if(formDiv.style.display === "none" || formDiv.style.display === ""){
+        formDiv.style.display = "block";
+    }else {
+        formDiv.style.display = "none";
+    }
+    
 })
 
+formDiv.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const title = document.querySelector("#title").value;
+    const author = document.querySelector("#author").value;
+    const pages = document.querySelector("#pages").value;
+    
+    const newBook = new Book(title, author, pages);
+    library.push(newBook);
+    console.log(`Book Added: ${newBook}`);
+
+    bookForm.reset();
+
+    displayBooks();
+
+    formDiv.style.display = "none";
+});
 
 
 displayBooks();
